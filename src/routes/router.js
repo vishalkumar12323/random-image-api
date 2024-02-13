@@ -1,11 +1,15 @@
 import express from "express";
+import {
+  randomImages,
+  uploadImage,
+  getImageByName,
+} from "../services/index.js";
 const router = express.Router();
 
-router.get("/random", (req, res) => {
-  res.json({ msg: "random image." });
-});
+router.get("/random", randomImages);
 
-router.post("/upload", (req, res) => {
-  res.json({ msg: "upload successfully." });
-});
+router.get("/image-name", getImageByName);
+
+router.post("/upload", uploadImage);
+
 export { router };
