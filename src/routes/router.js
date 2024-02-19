@@ -1,5 +1,9 @@
 const express = require("express");
-const { getImageByName, randomImages } = require("../services/index");
+const {
+  getImageByName,
+  uploadImage,
+  randomImages,
+} = require("../services/index");
 const multer = require("multer");
 const { storage } = require("../services/image-storage");
 
@@ -11,11 +15,6 @@ router.get("/random", randomImages);
 
 router.get("/image-name", getImageByName);
 
-router.post("/upload", upload.single("image"), async (req, res) => {
-  const { name } = req.body;
-  const filename = req.file.filename;
-
-  console.log(name, filename);
-});
+router.post("/upload", upload.single("image"), uploadImage);
 
 module.exports = { router };

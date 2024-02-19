@@ -1,4 +1,4 @@
-const { prisma } = require("../model/image");
+const prisma = require("../model/image");
 const path = require("path");
 
 const randomImages = async (req, res) => {
@@ -9,8 +9,23 @@ const randomImages = async (req, res) => {
 
 // const uploadImage =
 
-const getImageByName = async (req, res) => {
-  res.json({ msg: "name based image." });
+const getImageByName = async (req, res) => {};
+
+const uploadImage = async (req, res) => {
+  const { name } = req.body;
+  const filename = req.file.filename;
+
+  try {
+    const data = await prisma.image.create({
+      data: {
+        name: name,
+        url: `images/${filename}`,
+      },
+    });
+    res.status(200).send({ msg: "successfully upload", response: data });
+  } catch (e) {
+    console.log(`document create error: ${e}`);
+  }
 };
 
-module.exports = { randomImages, getImageByName };
+module.exports = { randomImages, uploadImage, getImageByName };
