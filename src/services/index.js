@@ -1,5 +1,4 @@
 const { prisma } = require("../model/image");
-const { image } = require("../images");
 const path = require("path");
 
 const randomImages = async (req, res) => {
@@ -8,12 +7,10 @@ const randomImages = async (req, res) => {
   );
 };
 
-const uploadImage = async (req, res) => {
-  res.json({ msg: "upload successfully." });
-};
+// const uploadImage =
 
 const getImageByName = async (req, res) => {
   res.json({ msg: "name based image." });
 };
 
-module.exports = { randomImages, uploadImage, getImageByName };
+module.exports = { randomImages, getImageByName };
