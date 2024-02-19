@@ -1,9 +1,9 @@
-import express from "express";
-import {
+const express = require("express");
+const {
+  getImageByName,
   randomImages,
   uploadImage,
-  getImageByName,
-} from "../services/index.js";
+} = require("../services/index");
 const router = express.Router();
 
 router.get("/random", randomImages);
@@ -12,4 +12,4 @@ router.get("/image-name", getImageByName);
 
 router.post("/upload", uploadImage);
 
-export { router };
+module.exports = { router };
