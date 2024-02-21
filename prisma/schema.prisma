@@ -11,7 +11,9 @@ datasource db {
 }
 
 model Image {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String @map("img_name")
-  url  String @map("img_url")
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
+  name String? @map("img_name")
+  url  String  @map("img_url")
+
+  @@map("Images")
 }

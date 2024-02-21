@@ -1,9 +1,5 @@
 const express = require("express");
-const {
-  getImageByName,
-  uploadImage,
-  randomImages,
-} = require("../services/index");
+const { getImageByName, uploadImage, getImage } = require("../services/index");
 const multer = require("multer");
 const { storage } = require("../services/image-storage");
 
@@ -11,7 +7,7 @@ const router = express.Router();
 
 const upload = multer({ storage: storage });
 
-router.get("/random", randomImages);
+router.get("/", getImage);
 
 router.get("/image-name", getImageByName);
 

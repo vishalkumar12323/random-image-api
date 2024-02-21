@@ -1,25 +1,25 @@
-const prisma = require("../model/image");
+const { Image, prisma } = require("../model/image");
 const path = require("path");
+const fs = require("fs");
 
-const randomImages = async (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "../public/images/pexels-pixabay-206359.jpg")
-  );
+const getImage = async (req, res) => {
+  try {
+    const image = await Image.find();
+    res.status(200).json({ data: image });
+  } catch (e) {
+    console.log(e);
+  }
 };
-
-// const uploadImage =
 
 const getImageByName = async (req, res) => {};
 
 const uploadImage = async (req, res) => {
-  const { name } = req.body;
-  const filename = req.file.filename;
-
   try {
-    const data = await prisma.image.create({
-      data: {
-        name: name,
-        url: `images/${filename}`,
+    const data = await Image.create({
+      name: req.body.name,
+      url: {
+        data: fs.readFileSync(req.file.path),
+        contentType: "image/jpg/png",
       },
     });
     res.status(200).send({ msg: "successfully upload", response: data });
@@ -28,4 +28,4 @@ const uploadImage = async (req, res) => {
   }
 };
 
-module.exports = { randomImages, uploadImage, getImageByName };
+module.exports = { getImage, uploadImage, getImageByName };
