@@ -1,7 +1,11 @@
 const express = require("express");
-const { getImageByName, uploadImage, getImage } = require("../services/index");
+const {
+  getImageByName,
+  uploadImg,
+  getImage,
+} = require("../services/image_controllers");
 const multer = require("multer");
-const { storage } = require("../services/image-storage");
+const { storage } = require("../services/multer_storage");
 
 const router = express.Router();
 
@@ -11,6 +15,6 @@ router.get("/", getImage);
 
 router.get("/image-name", getImageByName);
 
-router.post("/upload", upload.single("image"), uploadImage);
+router.post("/upload", upload.single("image"), uploadImg);
 
 module.exports = { router };

@@ -1,4 +1,5 @@
 const { Image, prisma } = require("../model/image");
+const uploadImage = require("./cloudinary");
 const path = require("path");
 const fs = require("fs");
 
@@ -13,14 +14,12 @@ const getImage = async (req, res) => {
 
 const getImageByName = async (req, res) => {};
 
-const uploadImage = async (req, res) => {
+const uploadImg = async (req, res) => {
   try {
+    const image_url = await uploadImage(req.file.path);
     const data = await Image.create({
       name: req.body.name,
-      url: {
-        data: fs.readFileSync(req.file.path),
-        contentType: "image/jpg/png",
-      },
+      url: image_url,
     });
     res.status(200).send({ msg: "successfully upload", response: data });
   } catch (e) {
@@ -28,4 +27,4 @@ const uploadImage = async (req, res) => {
   }
 };
 
-module.exports = { getImage, uploadImage, getImageByName };
+module.exports = { getImage, uploadImg, getImageByName };
