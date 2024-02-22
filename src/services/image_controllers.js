@@ -2,7 +2,7 @@ const { prisma } = require("../model/image");
 const uploadImage = require("./cloudinary");
 const path = require("path");
 
-const getImage = async (req, res) => {
+const getAllImage = async (req, res) => {
   try {
     const image = await prisma.image.findMany({
       select: { name: true, url: true },
@@ -13,7 +13,19 @@ const getImage = async (req, res) => {
   }
 };
 
-const getImageByName = async (req, res) => {};
+const getImageByName = async (req, res) => {
+  const query = req.query;
+  try {
+    const data = await prisma.image.findUnique({
+      where: { name: query.name, id: "65d6b817dbd4b7e7ad8ac9f2" },
+      select: { name: true, url: true },
+    });
+    if (!data) return res.status(404).json({ msg: "not found" });
+    res.status(200).json(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const uploadImg = async (req, res) => {
   try {
@@ -30,4 +42,4 @@ const uploadImg = async (req, res) => {
   }
 };
 
-module.exports = { getImage, uploadImg, getImageByName };
+module.exports = { getAllImage, uploadImg, getImageByName };
