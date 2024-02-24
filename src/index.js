@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { router } = require("./routes/router");
+const { connect } = require("./services/database");
 
 // initialize express app
 const app = express();
@@ -17,6 +18,7 @@ app.use("/images", router);
 
 // start express app with init function.
 const init = async () => {
+  connect(process.env.DATABASE_URL);
   app.listen(port, () => console.log(`api server hanging on port:${port}`));
 };
 init();

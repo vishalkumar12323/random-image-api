@@ -1,4 +1,19 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const { Schema, model } = require("mongoose");
 
-module.exports = { prisma };
+const imageSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+const Image = new model("image", imageSchema);
+
+module.exports = { Image };
