@@ -11,9 +11,9 @@ const router = express.Router();
 
 const upload = multer({ storage: storage });
 
-router.get("/", getAllImage);
+router.get("/all", getAllImage);
 
-router.get("/query", getImageByName);
+router.get("/q", getImageByName);
 
 router.post("/upload", upload.single("image"), uploadImg);
 
