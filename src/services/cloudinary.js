@@ -1,5 +1,6 @@
 const cloudinary = require("cloudinary").v2;
 
+//* Cloudinary data storage configuration.
 cloudinary.config({
   secure: true,
   cloud_name: process.env.CLOUD_NAME,
@@ -7,6 +8,7 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
+//* function to upload image on cloudinary server.
 const uploadImage = async (img) => {
   const options = {
     use_filename: true,
