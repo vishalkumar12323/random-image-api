@@ -2,6 +2,18 @@ const fs = require("fs");
 const { Image } = require("../model/image");
 const uploadImage = require("./cloudinary");
 
+const getRandomImage = async (req, res, next) => {
+  try {
+    const images = await Image.find({}).select({ name: true, url: true });
+    if (!images) return res.status(404).json({ message: "Not found." });
+    const imgIndex = Math.round(Math.random() * images.length - 1);
+    res.status(200).json({ data: images[imgIndex] });
+  } catch (e) {
+    next(e);
+    console.log(e);
+  }
+};
+
 //* function to fetch all image from the database.
 const getAllImage = async (req, res, next) => {
   const { limit } = req.query;
@@ -24,6 +36,7 @@ const getImageByName = async (req, res, next) => {
   let queryObject = {};
   try {
     if (name) {
+      console.log(newName);
       queryObject.name = { $regex: name, $options: "i" };
     }
     console.log(queryObject);
@@ -57,4 +70,4 @@ const uploadImg = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllImage, uploadImg, getImageByName };
+module.exports = { getAllImage, uploadImg, getImageByName, getRandomImage };

@@ -1,5 +1,6 @@
 const express = require("express");
 const {
+  getRandomImage,
   getImageByName,
   uploadImg,
   getAllImage,
@@ -11,6 +12,7 @@ const router = express.Router();
 
 const upload = multer({ storage: storage });
 
+router.get("/random", getRandomImage);
 //* Get all image route.
 router.get("/all", getAllImage);
 
