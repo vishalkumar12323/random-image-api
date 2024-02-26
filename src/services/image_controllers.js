@@ -6,7 +6,9 @@ const uploadImage = require("./cloudinary");
 const getAllImage = async (req, res, next) => {
   const { limit } = req.query;
   try {
-    const images = await Image.find({}).limit(limit);
+    const images = await Image.find({})
+      .select({ name: true, url: true })
+      .limit(limit);
 
     if (!images) return res.status(404).json({ message: "Not found." });
     res.status(200).json(images);
@@ -28,6 +30,7 @@ const getImageByName = async (req, res, next) => {
     const images = await Image.find(queryObject);
     res.status(200).json(images);
   } catch (e) {
+    next(e);
     console.log(e);
   }
 };
